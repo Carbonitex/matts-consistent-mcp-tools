@@ -151,6 +151,9 @@ public sealed class AtlassianClient
         catch (JsonException)
         {
         }
+        // Some endpoints (notably Confluence v1 on 401) return a full HTML page; don't dump it on the model.
+        if (body.TrimStart().StartsWith('<'))
+            return "(HTML error page returned)";
         return body.Length > 1000 ? body[..1000] + "…" : body;
     }
 }
