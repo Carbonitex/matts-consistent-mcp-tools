@@ -52,7 +52,7 @@ Then turn off the claude.ai Atlassian connector in `/mcp` so the two don't fight
 
 ## Tools
 
-**Jira:** `getJiraIssue`, `searchJiraIssuesUsingJql`, `createJiraIssue`, `editJiraIssue`, `assignJiraIssue`, `addCommentToJiraIssue`, `getJiraIssueComments`, `addWorklogToJiraIssue`, `getTransitionsForJiraIssue`, `transitionJiraIssue` (also accepts a transition or status name such as "Done"), `getVisibleJiraProjects`, `getJiraProjectIssueTypesMetadata`, `getJiraIssueTypeMetaWithFields`, `lookupJiraAccountId`, `getIssueLinkTypes`, `createIssueLink`, `getJiraIssueRemoteIssueLinks`
+**Jira:** `getJiraIssue`, `searchJiraIssuesUsingJql`, `createJiraIssue`, `editJiraIssue`, `assignJiraIssue`, `deleteJiraIssue`, `addCommentToJiraIssue`, `getJiraIssueComments`, `addWorklogToJiraIssue`, `getTransitionsForJiraIssue`, `transitionJiraIssue` (also accepts a transition or status name such as "Done"), `getVisibleJiraProjects`, `getJiraProjectIssueTypesMetadata`, `getJiraIssueTypeMetaWithFields`, `lookupJiraAccountId`, `getIssueLinkTypes`, `createIssueLink`, `deleteIssueLink`, `getJiraIssueRemoteIssueLinks`
 
 **Confluence:** `getConfluencePage`, `getConfluencePageByTitle`, `getConfluenceSpaces`, `getPagesInConfluenceSpace`, `getConfluencePageChildren`, `getConfluencePageDescendants`, `createConfluencePage`, `updateConfluencePage`, `searchConfluenceUsingCql`, `getConfluencePageFooterComments`, `getConfluencePageInlineComments`, `getConfluenceCommentChildren`, `createConfluenceFooterComment`, `createConfluenceInlineComment`
 

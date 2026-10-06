@@ -184,6 +184,20 @@ public static class JiraTools
         });
     }
 
+    [McpServerTool(Name = "deleteJiraIssue", Destructive = true)]
+    [Description("Permanently delete a Jira issue (no undo; requires the Delete Issues permission). Issues with sub-tasks fail unless deleteSubtasks is true. Prefer transitioning to Done unless deletion is really wanted.")]
+    public static async Task<string> DeleteJiraIssue(
+        AtlassianClient client,
+        [Description(IssueDesc)] string issueIdOrKey,
+        [Description("Also delete the issue's sub-tasks (required if it has any). Default false.")] bool deleteSubtasks = false,
+        [Description(CloudIdDesc)] string? cloudId = null,
+        CancellationToken ct = default)
+    {
+        await client.JiraAsync(HttpMethod.Delete,
+            $"/rest/api/3/issue/{Json.Q(issueIdOrKey)}?deleteSubtasks={(deleteSubtasks ? "true" : "false")}", null, ct);
+        return Json.Out(new JsonObject { ["deleted"] = true, ["issue"] = issueIdOrKey, ["deleteSubtasks"] = deleteSubtasks });
+    }
+
     // ---------------------------------------------------------------- comments & worklogs
 
     [McpServerTool(Name = "addCommentToJiraIssue")]
@@ -574,6 +588,18 @@ public static class JiraTools
             ["inwardIssue"] = inwardIssue,
             ["outwardIssue"] = outwardIssue,
         });
+    }
+
+    [McpServerTool(Name = "deleteIssueLink", Destructive = true)]
+    [Description("Delete an issue link by its link ID (the \"id\" on each entry in getJiraIssue's issuelinks). Both issues are left intact.")]
+    public static async Task<string> DeleteIssueLink(
+        AtlassianClient client,
+        [Description("Issue link ID (e.g. 40541)")] string linkId,
+        [Description(CloudIdDesc)] string? cloudId = null,
+        CancellationToken ct = default)
+    {
+        await client.JiraAsync(HttpMethod.Delete, $"/rest/api/3/issueLink/{Json.Q(linkId)}", null, ct);
+        return Json.Out(new JsonObject { ["deleted"] = true, ["linkId"] = linkId });
     }
 
     [McpServerTool(Name = "getJiraIssueRemoteIssueLinks", ReadOnly = true)]
