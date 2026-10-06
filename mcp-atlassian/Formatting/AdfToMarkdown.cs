@@ -75,7 +75,9 @@ internal static partial class AdfToMarkdown
             case "heading":
             {
                 var level = int.TryParse(Attr(node, "level"), out var l) ? Math.Clamp(l, 1, 6) : 1;
-                return new string('#', level) + " " + RenderInlines(Content(node), false).Replace("\n", " ");
+                // Jira editors leave empty headings and leading spaces behind; both render badly in Markdown.
+                var text = RenderInlines(Content(node), false).Replace("\n", " ").Trim();
+                return text.Length == 0 ? "" : new string('#', level) + " " + text;
             }
             case "bulletList":
             case "orderedList":

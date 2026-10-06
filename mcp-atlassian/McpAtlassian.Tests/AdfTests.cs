@@ -643,4 +643,16 @@ public class InputOutputTests
 
     [Fact]
     public void ForOutput_Null() => Assert.Null(Adf.ForOutput(null, "adf"));
+
+    [Fact]
+    public void ToMarkdown_SkipsEmptyHeadingsAndTrimsHeadingText()
+    {
+        var adf = JsonNode.Parse("""
+            {"type":"doc","version":1,"content":[
+              {"type":"heading","attrs":{"level":2}},
+              {"type":"heading","attrs":{"level":2},"content":[{"type":"text","text":"    Goal"}]},
+              {"type":"paragraph","content":[{"type":"text","text":"body"}]}]}
+            """);
+        Assert.Equal("## Goal\n\nbody", Adf.ToMarkdown(adf));
+    }
 }
